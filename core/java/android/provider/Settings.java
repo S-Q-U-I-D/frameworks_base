@@ -8357,6 +8357,15 @@ public final class Settings {
                 "packages_to_clear_data_before_full_restore";
 
         /**
+         * Boolean value whether to link ringtone and notification volume
+         * @hide
+         */
+        public static final String VOLUME_LINK_NOTIFICATION = "volume_link_notification";
+        /** @hide */
+        private static final Validator VOLUME_LINK_NOTIFICATION_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * This are the settings to be backed up.
          *
          * NOTE: Settings are backed up and restored in the order they appear
