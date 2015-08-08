@@ -4159,6 +4159,14 @@ public final class Settings {
 
         private static final Validator OMNI_BOTTOM_GESTURE_SWIPE_LIMIT_VALIDATOR =
                 ANY_INTEGER_VALIDATOR;
+                
+		 /**
+         * Three Finger Gesture from Oppo
+         * 
+         * @hide
+         */
+        public static final String THREE_FINGER_GESTURE = "three_finger_gesture";
+
 
          /**
          * Whether to display sound panel in the power menu
