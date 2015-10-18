@@ -871,6 +871,14 @@ public final class DefaultPermissionGrantPolicy {
         PackageParser.Package googleSoundPackage = getSystemPackage("com.google.android.soundpicker");
         if (googleSoundPackage != null) {
             grantRuntimePermissions(googleSoundPackage, STORAGE_PERMISSIONS, true, userId);
+		}
+        
+        // Chromium Sign-in
+        PackageParser.Package chromiumPackage = getDefaultProviderAuthorityPackage(
+                "org.chromium.chrome", userId);
+        if (chromiumPackage != null) {
+            grantRuntimePermissions(chromiumPackage, CONTACTS_PERMISSIONS, userId);
+            grantRuntimePermissions(chromiumPackage, STORAGE_PERMISSIONS, true, userId);
         }
     }
 
