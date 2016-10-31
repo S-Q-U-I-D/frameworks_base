@@ -4370,6 +4370,22 @@ public final class Settings {
         public static final String ANSWER_VOLUME_BUTTON_BEHAVIOR_ANSWER = "call_volume_answer";
 
         /**
+         * Number of qs columns on landscape orientation
+         * @hide
+         */
+        public static final String OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE = "qs_layout_columns_landscape";
+         /** @hide */
+        private static final Validator OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE_VALIDATOR =
+                ANY_STRING_VALIDATOR;
+         /**
+         * @hide
+         */
+        public static final String OMNI_QS_LAYOUT_COLUMNS = "qs_layout_columns";
+         /** @hide */
+        private static final Validator OMNI_QS_LAYOUT_COLUMNS_VALIDATOR =
+                ANY_STRING_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -4432,6 +4448,12 @@ public final class Settings {
             OMNI_USE_BOTTOM_GESTURE_NAVIGATION,
             OMNI_BOTTOM_GESTURE_TRIGGER_TIMEOUT,
             OMNI_BOTTOM_GESTURE_SWIPE_LIMIT,
+<<<<<<< HEAD
+=======
+            NOTIFICATION_LIGHT_PULSE,
+            OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE,
+            OMNI_QS_LAYOUT_COLUMNS,
+>>>>>>> 60773bfbe9a... base: SystemUI: make QS columns count configurable
         };
 
         /**
@@ -4557,6 +4579,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(BATTERY_LIGHT_FULL_COLOR);
             PRIVATE_SETTINGS.add(BATTERY_LIGHT_REALLYFULL_COLOR);
             PRIVATE_SETTINGS.add(BATTERY_LIGHT_LOW_BLINKING);
+            PRIVATE_SETTINGS.add(OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE);
+            PRIVATE_SETTINGS.add(OMNI_QS_LAYOUT_COLUMNS);
         }
 
 
@@ -4652,7 +4676,11 @@ public final class Settings {
             VALIDATORS.put(OMNI_BOTTOM_GESTURE_TRIGGER_TIMEOUT,
                     OMNI_BOTTOM_GESTURE_TRIGGER_TIMEOUT_VALIDATOR);
             VALIDATORS.put(OMNI_BOTTOM_GESTURE_SWIPE_LIMIT,
-                    OMNI_BOTTOM_GESTURE_SWIPE_LIMIT_VALIDATOR);              
+                    OMNI_BOTTOM_GESTURE_SWIPE_LIMIT_VALIDATOR);
+            VALIDATORS.put(NOTIFICATION_LIGHT_PULSE, BOOLEAN_VALIDATOR);
+            VALIDATORS.put(OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE,
+                    OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE_VALIDATOR);
+            VALIDATORS.put(OMNI_QS_LAYOUT_COLUMNS, OMNI_QS_LAYOUT_COLUMNS_VALIDATOR);
         }
 
         /**
