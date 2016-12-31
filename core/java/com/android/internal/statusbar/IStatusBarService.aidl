@@ -106,6 +106,6 @@ interface IStatusBarService
      * AOSP
      */
     void toggleCameraFlash();
-
     void toggleNavigationBar(boolean enable);
+    void restartUI();
 }
