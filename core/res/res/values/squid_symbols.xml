@@ -44,4 +44,12 @@
     <java-symbol type="integer" name="nav_gesture_swipe_min_length" />
     <java-symbol type="integer" name="nav_gesture_swipe_timout" />
     <java-symbol type="integer" name="nav_gesture_move_threshold" />
+   
+    <!-- Whether to show battery percentage inside icon -->
+    <java-symbol type="bool" name="config_battery_percentage_show_inside_icon" />   
+
+	<java-symbol type="bool" name="config_intrusiveBatteryLed" />
+	<java-symbol type="bool" name="config_multiColorBatteryLed" />
+	<java-symbol type="bool" name="config_ledCanPulse" />
+    
 </resources>
