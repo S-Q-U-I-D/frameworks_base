@@ -4386,6 +4386,16 @@ public final class Settings {
                 ANY_STRING_VALIDATOR;
 
         /**
+         * Whether to display qs tile titles in the qs panel
+         * @hide
+         */
+        public static final String OMNI_QS_TILE_TITLE_VISIBILITY = "qs_tile_title_visibility";
+
+        /** @hide */
+        private static final Validator OMNI_QS_TILE_TITLE_VISIBILITY_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -4448,12 +4458,10 @@ public final class Settings {
             OMNI_USE_BOTTOM_GESTURE_NAVIGATION,
             OMNI_BOTTOM_GESTURE_TRIGGER_TIMEOUT,
             OMNI_BOTTOM_GESTURE_SWIPE_LIMIT,
-<<<<<<< HEAD
-=======
             NOTIFICATION_LIGHT_PULSE,
             OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE,
             OMNI_QS_LAYOUT_COLUMNS,
->>>>>>> 60773bfbe9a... base: SystemUI: make QS columns count configurable
+            OMNI_QS_TILE_TITLE_VISIBILITY,
         };
 
         /**
@@ -4581,6 +4589,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(BATTERY_LIGHT_LOW_BLINKING);
             PRIVATE_SETTINGS.add(OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE);
             PRIVATE_SETTINGS.add(OMNI_QS_LAYOUT_COLUMNS);
+            PRIVATE_SETTINGS.add(OMNI_QS_TILE_TITLE_VISIBILITY);
         }
 
 
@@ -4681,6 +4690,7 @@ public final class Settings {
             VALIDATORS.put(OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE,
                     OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE_VALIDATOR);
             VALIDATORS.put(OMNI_QS_LAYOUT_COLUMNS, OMNI_QS_LAYOUT_COLUMNS_VALIDATOR);
+            VALIDATORS.put(OMNI_QS_TILE_TITLE_VISIBILITY, OMNI_QS_TILE_TITLE_VISIBILITY_VALIDATOR);
         }
 
         /**
