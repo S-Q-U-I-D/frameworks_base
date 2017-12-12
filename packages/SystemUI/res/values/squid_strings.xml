@@ -91,5 +91,8 @@
     <string name="screenrecord_show_hint">Show hint</string>
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenrecord_label">Screenrecord</string>
+
+	<!-- Blacklist tuner UI -->
+    <string name="status_bar_vpn">VPN</string>
         
 </resources>
