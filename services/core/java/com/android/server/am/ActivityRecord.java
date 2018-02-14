@@ -203,6 +203,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import android.util.BoostFramework;
 
 /**
  * An entry in the history stack, representing an activity.
@@ -359,6 +360,8 @@ final class ActivityRecord extends ConfigurationContainer implements AppWindowCo
 
     private boolean mShowWhenLocked;
     private boolean mTurnScreenOn;
+    public static BoostFramework mPerfFirstDraw = null;
+
     // Full screen aspect ratio
     private final float mFullScreenAspectRatio = Resources.getSystem().getFloat(
                     com.android.internal.R.dimen.config_screenAspectRatio);
@@ -1988,11 +1991,80 @@ final class ActivityRecord extends ConfigurationContainer implements AppWindowCo
     }
 
     public void reportFullyDrawnLocked(boolean restoredFromBundle) {
-        final WindowingModeTransitionInfoSnapshot info = mStackSupervisor
-                .getActivityMetricsLogger().logAppTransitionReportedDrawn(this, restoredFromBundle);
-        if (info != null) {
-            mStackSupervisor.reportActivityLaunchedLocked(false /* timeout */, this,
-                    info.windowsFullyDrawnDelayMs);
+        final long curTime = SystemClock.uptimeMillis();
+        if (displayStartTime != 0) {
+            reportLaunchTimeLocked(curTime);
+        }
+        final LaunchTimeTracker.Entry entry = mStackSupervisor.getLaunchTimeTracker().getEntry(
+                getWindowingMode());
+        if (fullyDrawnStartTime != 0 && entry != null) {
+            final long thisTime = curTime - fullyDrawnStartTime;
+            final long totalTime = entry.mFullyDrawnStartTime != 0
+                    ? (curTime - entry.mFullyDrawnStartTime) : thisTime;
+            if (SHOW_ACTIVITY_START_TIME) {
+                Trace.asyncTraceEnd(TRACE_TAG_ACTIVITY_MANAGER, "drawing", 0);
+                EventLog.writeEvent(AM_ACTIVITY_FULLY_DRAWN_TIME,
+                        userId, System.identityHashCode(this), shortComponentName,
+                        thisTime, totalTime);
+                StringBuilder sb = service.mStringBuilder;
+                sb.setLength(0);
+                sb.append("Fully drawn ");
+                sb.append(shortComponentName);
+                sb.append(": ");
+                TimeUtils.formatDuration(thisTime, sb);
+                if (thisTime != totalTime) {
+                    sb.append(" (total ");
+                    TimeUtils.formatDuration(totalTime, sb);
+                    sb.append(")");
+                }
+                Log.i(TAG, sb.toString());
+            }
+            if (totalTime > 0) {
+                //service.mUsageStatsService.noteFullyDrawnTime(realActivity, (int) totalTime);
+            }
+            entry.mFullyDrawnStartTime = 0;
+        }
+        mStackSupervisor.getActivityMetricsLogger().logAppTransitionReportedDrawn(this,
+                restoredFromBundle);
+        fullyDrawnStartTime = 0;
+    }
+
+    private void reportLaunchTimeLocked(final long curTime) {
+        final LaunchTimeTracker.Entry entry = mStackSupervisor.getLaunchTimeTracker().getEntry(
+                getWindowingMode());
+        if (entry == null) {
+            return;
+        }
+        final long thisTime = curTime - displayStartTime;
+        final long totalTime = entry.mLaunchStartTime != 0
+                ? (curTime - entry.mLaunchStartTime) : thisTime;
+        if (SHOW_ACTIVITY_START_TIME) {
+            Trace.asyncTraceEnd(TRACE_TAG_ACTIVITY_MANAGER, "launching: " + packageName, 0);
+            EventLog.writeEvent(AM_ACTIVITY_LAUNCH_TIME,
+                    userId, System.identityHashCode(this), shortComponentName,
+                    thisTime, totalTime);
+            StringBuilder sb = service.mStringBuilder;
+            sb.setLength(0);
+            sb.append("Displayed ");
+            sb.append(shortComponentName);
+            sb.append(": ");
+            TimeUtils.formatDuration(thisTime, sb);
+            if (thisTime != totalTime) {
+                sb.append(" (total ");
+                TimeUtils.formatDuration(totalTime, sb);
+                sb.append(")");
+            }
+            Log.i(TAG, sb.toString());
+        }
+        mStackSupervisor.reportActivityLaunchedLocked(false, this, thisTime, totalTime);
+        if (mPerfFirstDraw == null) {
+            mPerfFirstDraw = new BoostFramework();
+        }
+        if (mPerfFirstDraw != null) {
+            mPerfFirstDraw.perfHint(BoostFramework.VENDOR_HINT_FIRST_DRAW, info.packageName, (int)thisTime, BoostFramework.Draw.EVENT_TYPE_V1);
+        }
+        if (totalTime > 0) {
+            //service.mUsageStatsService.noteLaunchTime(realActivity, (int)totalTime);
         }
     }
     @Override
