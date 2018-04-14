@@ -141,7 +141,7 @@
     <string name="theme_info_title">What is this?</string>
     <string name="theme_info_message">The Themes tile is a unique but easy to use tile that allows the user to change the system accent or style.\n\nTo change between accents and styles, simply long press on the tile and then press again to select from the options offered.</string>
 
-     <!-- Navbar Tuner -->
+    <!-- Navbar Tuner -->
     <string name="preview">Preview</string>
     <string name="keycode">Keycode</string>
     <string name="no_home_title">No home button found</string>
@@ -164,5 +164,8 @@
     <string name="navbar_editor_summary">Configure navigaton bar</string>
     <string name="menu_ime_always_show">Menu</string>
     <string name="search">Search</string>
+
+    <!-- Button that controls inversion of layout of navigation bar -->
+    <string name="nav_bar_layout_inverse">Invert layout</string>
 
 </resources>
