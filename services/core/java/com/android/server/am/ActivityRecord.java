@@ -2074,6 +2074,7 @@ final class ActivityRecord extends ConfigurationContainer implements AppWindowCo
         }
         return isGame;
     }
+
     @Override
     public void onStartingWindowDrawn(long timestamp) {
         synchronized (service) {
