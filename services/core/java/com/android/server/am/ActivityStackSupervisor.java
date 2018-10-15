@@ -3435,6 +3435,16 @@ public class ActivityStackSupervisor extends ConfigurationContainer implements D
            mPerfBoost.perfHint(BoostFramework.VENDOR_HINT_FIRST_LAUNCH_BOOST, r.packageName, -1, BoostFramework.Launch.BOOST_V1);
            mPerfSendTapHint = true;
            mPerfBoost.perfHint(BoostFramework.VENDOR_HINT_FIRST_LAUNCH_BOOST, r.packageName, -1, BoostFramework.Launch.BOOST_V2);
+           if(mPerfBoost.perfGetFeedback(BoostFramework.VENDOR_FEEDBACK_WORKLOAD_TYPE, r.packageName) == BoostFramework.WorkloadType.GAME)
+           {
+               mPerfHandle = mPerfBoost.perfHint(BoostFramework.VENDOR_HINT_FIRST_LAUNCH_BOOST, r.packageName, -1,
+                                                                                               BoostFramework.Launch.BOOST_GAME);
+           } else {
+               mPerfHandle = mPerfBoost.perfHint(BoostFramework.VENDOR_HINT_FIRST_LAUNCH_BOOST, r.packageName, -1,
+                                                                                                 BoostFramework.Launch.BOOST_V3);
+           }
+           if (mPerfHandle > 0)
+               mIsPerfBoostAcquired = true;
            // Start IOP
            mPerfBoost.perfIOPrefetchStart(-1,r.packageName,
                    r.appInfo.sourceDir.substring(0, r.appInfo.sourceDir.lastIndexOf('/')));
