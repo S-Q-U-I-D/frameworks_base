@@ -943,6 +943,14 @@ public class Build {
     public static final String FINGERPRINT = deriveFingerprint();
 
     /**
+     * SQUID fingerprint
+     * @hide
+     */
+    /* @hide */
+    public static final String SQUID_FINGERPRINT = SystemProperties.get("ro.squid.fingerprint",
+            deriveFingerprint());
+
+    /**
      * Some devices split the fingerprint components between multiple
      * partitions, so we might derive the fingerprint at runtime.
      */
