@@ -7826,6 +7826,12 @@ public final class Settings {
 
         private static final Validator NOTIFICATION_BADGING_VALIDATOR = BOOLEAN_VALIDATOR;
 
+	/**
+         * Whether to enable navigation bar
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_ENABLED = "navigation_bar_enabled";
+
         /**
          * Comma separated list of QS tiles that have been auto-added already.
          * @hide

@@ -155,4 +155,6 @@ oneway interface IStatusBar
      * AOSP
      */
     void toggleCameraFlash();
+
+    void toggleNavigationBar(boolean enable);
 }
