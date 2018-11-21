@@ -43,6 +43,9 @@
     <!-- Whether device has turbo power charging support -->
     <bool name="config_hasTurboPowerCharger">false</bool>
 
+    <!-- Whether device has super charging support -->
+    <bool name="config_hasSuperCharger">false</bool>
+
     <!-- Whether to cleanup fingerprints upon connection to the daemon and when user switches -->
     <bool name="config_cleanupUnusedFingerprints">true</bool>
 
