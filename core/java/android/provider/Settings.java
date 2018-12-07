@@ -4296,6 +4296,8 @@ public final class Settings {
             HAPTIC_FEEDBACK_INTENSITY,
             DISPLAY_COLOR_MODE,
             OMNI_USE_BOTTOM_GESTURE_NAVIGATION,
+            OMNI_BOTTOM_GESTURE_TRIGGER_TIMEOUT,
+            OMNI_BOTTOM_GESTURE_SWIPE_LIMIT,
         };
 
         /**
@@ -4412,6 +4414,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SHOW_BATTERY_PERCENT);
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_MODE);
             PRIVATE_SETTINGS.add(OMNI_USE_BOTTOM_GESTURE_NAVIGATION);
+            PRIVATE_SETTINGS.add(OMNI_BOTTOM_GESTURE_TRIGGER_TIMEOUT);
+            PRIVATE_SETTINGS.add(OMNI_BOTTOM_GESTURE_SWIPE_LIMIT);
         }
 
 
@@ -4503,7 +4507,11 @@ public final class Settings {
             VALIDATORS.put(WIFI_STATIC_DNS2, WIFI_STATIC_DNS2_VALIDATOR);
             VALIDATORS.put(SHOW_BATTERY_PERCENT, SHOW_BATTERY_PERCENT_VALIDATOR);
             VALIDATORS.put(OMNI_USE_BOTTOM_GESTURE_NAVIGATION,
-                    OMNI_USE_BOTTOM_GESTURE_NAVIGATION_VALIDATOR);
+                   OMNI_USE_BOTTOM_GESTURE_NAVIGATION_VALIDATOR);
+            VALIDATORS.put(OMNI_BOTTOM_GESTURE_TRIGGER_TIMEOUT,
+                    OMNI_BOTTOM_GESTURE_TRIGGER_TIMEOUT_VALIDATOR);
+            VALIDATORS.put(OMNI_BOTTOM_GESTURE_SWIPE_LIMIT,
+                    OMNI_BOTTOM_GESTURE_SWIPE_LIMIT_VALIDATOR);              
         }
 
         /**
@@ -4660,6 +4668,24 @@ public final class Settings {
             Secure.PARENTAL_CONTROL_REDIRECT_URL;
 
         /**
+         * @hide
+         */
+        public static final String OMNI_BOTTOM_GESTURE_TRIGGER_TIMEOUT =
+                "bottom_gesture_navigation_trigger_timeout";
+
+        private static final Validator OMNI_BOTTOM_GESTURE_TRIGGER_TIMEOUT_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String OMNI_BOTTOM_GESTURE_SWIPE_LIMIT =
+                "bottom_gesture_navigation_swipe_limit";
+
+        private static final Validator OMNI_BOTTOM_GESTURE_SWIPE_LIMIT_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
+        /**
          * @deprecated Use {@link android.provider.Settings.Secure#SETTINGS_CLASSNAME} instead
          */
         @Deprecated
@@ -4798,6 +4824,7 @@ public final class Settings {
          */
         @Deprecated
         public static final String WIFI_WATCHDOG_PING_COUNT = Secure.WIFI_WATCHDOG_PING_COUNT;
+
 
         /**
          * @deprecated Use {@link android.provider.Settings.Secure#WIFI_WATCHDOG_PING_DELAY_MS}
