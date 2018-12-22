@@ -92,10 +92,8 @@
 	<java-symbol type="color" name="power_menu_advanced_recovery" />
 	<java-symbol type="color" name="power_menu_advanced_system_restart_ui" />
 	<java-symbol type="color" name="power_menu_screenshot" />
-	<java-symbol type="color" name="power_menu_screenrecord" />
-	<java-symbol type="color" name="power_menu_torch" />
 	<java-symbol type="color" name="power_menu_settings" />
-	<java-symbol type="color" name="power_menu_lock" />
+	<java-symbol type="color" name="power_menu_lockdown" />
 
 	<!-- Notification icon/text dynamic tint -->
 	<java-symbol name="config_allowNotificationIconTextTinting" type="bool" />
