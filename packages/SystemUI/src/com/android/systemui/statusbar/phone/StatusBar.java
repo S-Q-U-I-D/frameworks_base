@@ -465,6 +465,8 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     private ScreenPinningRequest mScreenPinningRequest;
 
+    private UiModeManager mUiModeManager;
+
     private final MetricsLogger mMetricsLogger = Dependency.get(MetricsLogger.class);
 
     // ensure quick settings is disabled until the current user makes it through the setup wizard
@@ -804,6 +806,8 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         mScreenPinningRequest = new ScreenPinningRequest(mContext);
         mFalsingManager = FalsingManager.getInstance(mContext);
+
+        mUiModeManager = mContext.getSystemService(UiModeManager.class);
 
         Dependency.get(ActivityStarterDelegate.class).setActivityStarterImpl(this);
 
@@ -4015,6 +4019,10 @@ public class StatusBar extends SystemUI implements DemoMode,
             // unfuckBlackWhiteAccent();
             ThemeAccentUtils.setLightBlackTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), useBlackTheme);
         }
+	if (mUiModeManager != null) {
+		mUiModeManager.setNightMode(useDarkTheme || useBlackTheme ?
+			UiModeManager.MODE_NIGHT_YES : UiModeManager.MODE_NIGHT_NO);
+	}
 
         // Lock wallpaper defines the color of the majority of the views, hence we'll use it
         // to set our default theme.
