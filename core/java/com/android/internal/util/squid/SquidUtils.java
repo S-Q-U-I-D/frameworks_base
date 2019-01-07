@@ -20,9 +20,12 @@ import android.Manifest;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.hardware.input.InputManager;
 import android.hardware.fingerprint.FingerprintManager;
+import android.os.BatteryManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.PowerManager;
@@ -212,5 +215,17 @@ public class SquidUtils {
         // Use boolean to determine celsius or fahrenheit
         return String.valueOf((n - c) % 2 == 0 ? (int) temp :
                 ForC ? c * 9/5 + 32 + "°F" :c + "°C");
+    }
+
+    // Method to detect if device is plugged in (wired or wireless)
+    public static boolean isPlugged(Context context) {
+        boolean isPlugged;
+        Intent intent = context.registerReceiver(null, new IntentFilter(
+                Intent.ACTION_BATTERY_CHANGED));
+        int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
+        isPlugged = plugged ==
+                BatteryManager.BATTERY_PLUGGED_AC || plugged == BatteryManager.BATTERY_PLUGGED_USB;
+        isPlugged = isPlugged || plugged == BatteryManager.BATTERY_PLUGGED_WIRELESS;
+        return isPlugged;
     }
 }
