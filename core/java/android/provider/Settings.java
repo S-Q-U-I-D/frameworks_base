@@ -4186,13 +4186,8 @@ public final class Settings {
             SHOW_BATTERY_PERCENT,
             NOTIFICATION_VIBRATION_INTENSITY,
             HAPTIC_FEEDBACK_INTENSITY,
-<<<<<<< HEAD
             DISPLAY_COLOR_MODE,
-            NOTIFICATION_LIGHT_PULSE,
-=======
-            DISPLAY_COLOR_MODE
             OMNI_USE_BOTTOM_GESTURE_NAVIGATION,
->>>>>>> 838d5506d3c... [1/2] base: implement OP like navigation gestures
         };
 
         /**
