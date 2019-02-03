@@ -1072,7 +1072,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.SYSTEM_NAVIGATION_KEYS_ENABLED), false, this,
                     UserHandle.USER_ALL);
-			resolver.registerContentObserver(Settings.Secure.getUriFor(
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.NAVIGATION_BAR_ENABLED), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -2706,13 +2706,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     sbar.toggleNavigationBar(mHasNavigationBar);
                 } catch (RemoteException e1) {}
             }
-	}
 
             mUseGestureButton = Settings.System.getIntForUser(resolver,
                     Settings.System.OMNI_USE_BOTTOM_GESTURE_NAVIGATION, 0,
                     UserHandle.USER_CURRENT) != 0;
 
-			mVolumeMusicControl = Settings.System.getIntForUser(resolver,
+	    mVolumeMusicControl = Settings.System.getIntForUser(resolver,
                     Settings.System.VOLUME_BUTTON_MUSIC_CONTROL, 0,
                     UserHandle.USER_CURRENT) != 0;
         }
@@ -9332,6 +9331,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     @Override
     public boolean isGestureButtonEnabled() {
         return mUseGestureButton;
+    }
 
     /**
      * @return Whether music is being played right now "locally" (e.g. on the device's speakers
