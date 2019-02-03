@@ -4142,6 +4142,24 @@ public final class Settings {
         private static final Validator OMNI_USE_BOTTOM_GESTURE_NAVIGATION_VALIDATOR =
                 BOOLEAN_VALIDATOR;
 
+        /**
+         * @hide
+         */
+        public static final String OMNI_BOTTOM_GESTURE_TRIGGER_TIMEOUT =
+                "bottom_gesture_navigation_trigger_timeout";
+
+        private static final Validator OMNI_BOTTOM_GESTURE_TRIGGER_TIMEOUT_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String OMNI_BOTTOM_GESTURE_SWIPE_LIMIT =
+                "bottom_gesture_navigation_swipe_limit";
+
+        private static final Validator OMNI_BOTTOM_GESTURE_SWIPE_LIMIT_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
          /**
          * Whether to display sound panel in the power menu
          *
@@ -4666,24 +4684,6 @@ public final class Settings {
         @Deprecated
         public static final String PARENTAL_CONTROL_REDIRECT_URL =
             Secure.PARENTAL_CONTROL_REDIRECT_URL;
-
-        /**
-         * @hide
-         */
-        public static final String OMNI_BOTTOM_GESTURE_TRIGGER_TIMEOUT =
-                "bottom_gesture_navigation_trigger_timeout";
-
-        private static final Validator OMNI_BOTTOM_GESTURE_TRIGGER_TIMEOUT_VALIDATOR =
-                ANY_INTEGER_VALIDATOR;
-
-        /**
-         * @hide
-         */
-        public static final String OMNI_BOTTOM_GESTURE_SWIPE_LIMIT =
-                "bottom_gesture_navigation_swipe_limit";
-
-        private static final Validator OMNI_BOTTOM_GESTURE_SWIPE_LIMIT_VALIDATOR =
-                ANY_INTEGER_VALIDATOR;
 
         /**
          * @deprecated Use {@link android.provider.Settings.Secure#SETTINGS_CLASSNAME} instead
