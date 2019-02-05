@@ -2031,101 +2031,47 @@ final class ActivityRecord extends ConfigurationContainer implements AppWindowCo
     }
 
     public void reportFullyDrawnLocked(boolean restoredFromBundle) {
-        final long curTime = SystemClock.uptimeMillis();
-        if (displayStartTime != 0) {
-            reportLaunchTimeLocked(curTime);
-        }
-        final LaunchTimeTracker.Entry entry = mStackSupervisor.getLaunchTimeTracker().getEntry(
-                getWindowingMode());
-        if (fullyDrawnStartTime != 0 && entry != null) {
-            final long thisTime = curTime - fullyDrawnStartTime;
-            final long totalTime = entry.mFullyDrawnStartTime != 0
-                    ? (curTime - entry.mFullyDrawnStartTime) : thisTime;
-            if (SHOW_ACTIVITY_START_TIME) {
-                Trace.asyncTraceEnd(TRACE_TAG_ACTIVITY_MANAGER, "drawing", 0);
-                EventLog.writeEvent(AM_ACTIVITY_FULLY_DRAWN_TIME,
-                        userId, System.identityHashCode(this), shortComponentName,
-                        thisTime, totalTime);
-                StringBuilder sb = service.mStringBuilder;
-                sb.setLength(0);
-                sb.append("Fully drawn ");
-                sb.append(shortComponentName);
-                sb.append(": ");
-                TimeUtils.formatDuration(thisTime, sb);
-                if (thisTime != totalTime) {
-                    sb.append(" (total ");
-                    TimeUtils.formatDuration(totalTime, sb);
-                    sb.append(")");
-                }
-                Log.i(TAG, sb.toString());
-            }
-            if (totalTime > 0) {
-                //service.mUsageStatsService.noteFullyDrawnTime(realActivity, (int) totalTime);
-            }
-            entry.mFullyDrawnStartTime = 0;
-        }
-        mStackSupervisor.getActivityMetricsLogger().logAppTransitionReportedDrawn(this,
-                restoredFromBundle);
-        fullyDrawnStartTime = 0;
-    }
+        final WindowingModeTransitionInfoSnapshot info = mStackSupervisor
+                .getActivityMetricsLogger().logAppTransitionReportedDrawn(this, restoredFromBundle);
+        if (info != null) {
+            mStackSupervisor.reportActivityLaunchedLocked(false /* timeout */, this,
+                    info.windowsFullyDrawnDelayMs);
 
-    private void reportLaunchTimeLocked(final long curTime) {
-        final LaunchTimeTracker.Entry entry = mStackSupervisor.getLaunchTimeTracker().getEntry(
-                getWindowingMode());
-        if (entry == null) {
-            return;
-        }
-        final long thisTime = curTime - displayStartTime;
-        final long totalTime = entry.mLaunchStartTime != 0
-                ? (curTime - entry.mLaunchStartTime) : thisTime;
-        if (SHOW_ACTIVITY_START_TIME) {
-            Trace.asyncTraceEnd(TRACE_TAG_ACTIVITY_MANAGER, "launching: " + packageName, 0);
-            EventLog.writeEvent(AM_ACTIVITY_LAUNCH_TIME,
-                    userId, System.identityHashCode(this), shortComponentName,
-                    thisTime, totalTime);
-            StringBuilder sb = service.mStringBuilder;
-            sb.setLength(0);
-            sb.append("Displayed ");
-            sb.append(shortComponentName);
-            sb.append(": ");
-            TimeUtils.formatDuration(thisTime, sb);
-            if (thisTime != totalTime) {
-                sb.append(" (total ");
-                TimeUtils.formatDuration(totalTime, sb);
-                sb.append(")");
-                if (mUxPerf != null) {
-                    mUxPerf.perfUXEngine_events(BoostFramework.UXE_EVENT_DISPLAYED_ACT, 0, packageName, (int)totalTime);
-                }
-            } else {
-                if (mUxPerf != null) {
-                    mUxPerf.perfUXEngine_events(BoostFramework.UXE_EVENT_DISPLAYED_ACT, 0, packageName, (int)thisTime);
-                }
             }
-            Log.i(TAG, sb.toString());
+
+        int windowsFullyDrawnDelayMsPerf = info != null ? info.windowsFullyDrawnDelayMs : 0;
+
+        if (mUxPerf != null) {
+                    mUxPerf.perfUXEngine_events(BoostFramework.UXE_EVENT_DISPLAYED_ACT, 0, packageName,
+                                                       windowsFullyDrawnDelayMsPerf);
         }
-        mStackSupervisor.reportActivityLaunchedLocked(false, this, thisTime, totalTime);
-        if (appInfo != null) {
-            int isGame = 0;
-            isGame = (appInfo.category == ApplicationInfo.CATEGORY_GAME ||
-                      (appInfo.flags & ApplicationInfo.FLAG_IS_GAME) == ApplicationInfo.FLAG_IS_GAME) ? 1 : 0;
-            if (mUxPerf !=  null) {
-                mUxPerf.perfUXEngine_events(BoostFramework.UXE_EVENT_GAME, 0, packageName, isGame);
-            }
+
+        int isGame = isAppInfoGame();
+        if (mUxPerf !=  null) {
+            mUxPerf.perfUXEngine_events(BoostFramework.UXE_EVENT_GAME, 0, packageName, isGame);
         }
+
         if (mPerfFirstDraw == null) {
             mPerfFirstDraw = new BoostFramework();
         }
+
         if (mPerfFirstDraw != null) {
-            mPerfFirstDraw.perfHint(BoostFramework.VENDOR_HINT_FIRST_DRAW, info.packageName, (int)thisTime, BoostFramework.Draw.EVENT_TYPE_V1);
+            mPerfFirstDraw.perfHint(BoostFramework.VENDOR_HINT_FIRST_DRAW, info.packageName,
+                                          windowsFullyDrawnDelayMsPerf, BoostFramework.Draw.EVENT_TYPE_V1);
         }
-        if (totalTime > 0) {
-            //service.mUsageStatsService.noteLaunchTime(realActivity, (int)totalTime);
-        }
-        displayStartTime = 0;
-        entry.mLaunchStartTime = 0;
+
         if (mPerf != null && perfActivityBoostHandler > 0) {
             mPerf.perfLockReleaseHandler(perfActivityBoostHandler);
             perfActivityBoostHandler = -1;
+        }
+    }
+
+    public int isAppInfoGame() {
+        int isGame = 0;
+        if (appInfo != null) {
+            isGame = (appInfo.category == ApplicationInfo.CATEGORY_GAME ||
+                      (appInfo.flags & ApplicationInfo.FLAG_IS_GAME) == ApplicationInfo.FLAG_IS_GAME) ? 1 : 0;
+
         }
     }
     @Override
