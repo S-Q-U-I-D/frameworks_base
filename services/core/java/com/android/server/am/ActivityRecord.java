@@ -2071,8 +2071,8 @@ final class ActivityRecord extends ConfigurationContainer implements AppWindowCo
         if (appInfo != null) {
             isGame = (appInfo.category == ApplicationInfo.CATEGORY_GAME ||
                       (appInfo.flags & ApplicationInfo.FLAG_IS_GAME) == ApplicationInfo.FLAG_IS_GAME) ? 1 : 0;
-
         }
+        return isGame;
     }
     @Override
     public void onStartingWindowDrawn(long timestamp) {
