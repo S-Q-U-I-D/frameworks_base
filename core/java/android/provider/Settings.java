@@ -4314,11 +4314,6 @@ public final class Settings {
         /**
          * @hide
          */
-        public static final String VOLUME_BUTTON_MUSIC_CONTROL = "volume_button_music_control";
-
-        /**
-         * @hide
-         */
         public static final String TORCH_LONG_PRESS_POWER_GESTURE = "torch_long_press_power_gesture";
 
         /**
