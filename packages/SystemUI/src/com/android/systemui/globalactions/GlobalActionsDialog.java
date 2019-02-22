@@ -479,8 +479,12 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             } else if (GLOBAL_ACTION_KEY_RESTART_RECOVERY.equals(actionKey)) {
                 if (Settings.System.getInt(mContext.getContentResolver(),
                         Settings.System.POWERMENU_RESTART_RECOVERY, 1) == 1) {
-                    }
                     mItems.add(mShowAdvancedToggles);
+				}
+            } else if (GLOBAL_ACTION_KEY_EMERGENCY.equals(actionKey)) {
+                if (mSeparatedEmergencyButtonEnabled
+                        && !mEmergencyAffordanceManager.needsEmergencyAffordance()) {
+                    mItems.add(new EmergencyDialerAction());
                 }
             } else {
                 Log.e(TAG, "Invalid global action key " + actionKey);
