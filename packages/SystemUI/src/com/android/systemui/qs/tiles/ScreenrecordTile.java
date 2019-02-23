@@ -22,7 +22,7 @@ import android.provider.Settings;
 import android.service.quicksettings.Tile;
 import android.view.WindowManager;
 
-import com.android.internal.util.aosip.aosipUtils;
+import com.android.internal.util.aosp.AospUtils;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
@@ -47,7 +47,7 @@ public class ScreenrecordTile extends QSTileImpl<BooleanState> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.OWLSNEST;
+        return MetricsEvent.AOSP;
     }
 
     @Override
@@ -85,7 +85,7 @@ public class ScreenrecordTile extends QSTileImpl<BooleanState> {
         try {
              Thread.sleep(1000); //1s
         } catch (InterruptedException ie) {}
-        aosipUtils.takeScreenrecord(mMode);
+        AospUtils.takeScreenrecord(mMode);
     }
 
     @Override
