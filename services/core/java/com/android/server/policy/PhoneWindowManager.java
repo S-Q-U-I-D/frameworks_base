@@ -2690,7 +2690,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mUseGestureButton = Settings.System.getIntForUser(resolver,
                     Settings.System.OMNI_USE_BOTTOM_GESTURE_NAVIGATION, 0,
                     UserHandle.USER_CURRENT) != 0;
-        }
+
 
         synchronized (mWindowManagerFuncs.getWindowManagerLock()) {
             PolicyControl.reloadFromSetting(mContext);
