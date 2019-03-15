@@ -6499,5 +6499,8 @@ message MetricsEvent {
 
     // SquidSettings Contants
     SQUID_SETINGS = 9999; 
+
+    // SQUID
+	SQUID_TILE = 421; 
   }
 }
